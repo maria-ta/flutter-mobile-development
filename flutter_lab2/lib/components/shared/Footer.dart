@@ -1,43 +1,48 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lab2/constants/Colors.dart';
+import 'package:flutter_lab2/colors/AppStyleModeNotifier.dart';
+import 'package:provider/provider.dart';
 
 class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final appStyleMode = Provider.of<AppStyleModeNotifier>(context);
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
       child: Container(
         height: 50.0,
-        child: TabBar(
-          indicatorColor: brandColors.fuzzy,
-          tabs: [
-            Tab(
+        child: Material(
+          color: appStyleMode.background,
+          child: TabBar(
+            indicatorColor: appStyleMode.fuzzy,
+            tabs: [
+              Tab(
                 icon: Icon(
-                    Icons.home,
-                  color: Colors.black,
+                  Icons.home,
+                  color: appStyleMode.text,
                 ),
-            ),
-            Tab(
-                icon: Icon(
+              ),
+              Tab(
+                  icon: Icon(
                     Icons.search,
-                  color: Colors.black,
-                )
-            ),
-            Tab(
-                icon: Icon(
+                    color: appStyleMode.text,
+                  )
+              ),
+              Tab(
+                  icon: Icon(
                     Icons.favorite,
-                  color: Colors.black,
-                )
-            ),
-            Tab(
-                icon: Icon(
+                    color: appStyleMode.text,
+                  )
+              ),
+              Tab(
+                  icon: Icon(
                     Icons.perm_identity,
-                  color: Colors.black,
-                )
-            ),
-          ],
-        ),
+                    color: appStyleMode.text,
+                  )
+              ),
+            ],
+          )
+        )
       ),
     );
   }

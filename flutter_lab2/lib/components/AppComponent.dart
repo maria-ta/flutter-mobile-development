@@ -1,31 +1,51 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lab2/components/PageTabWrapper.dart';
-import 'package:flutter_lab2/constants/Colors.dart';
+import 'package:flutter_lab2/animations/AnimatedRoute.dart';
+import 'package:flutter_lab2/colors/AppStyleModeNotifier.dart';
+import 'package:flutter_lab2/components/routes/CreatePostPage.dart';
+import 'package:flutter_lab2/components/routes/LoginPage.dart';
+import 'package:flutter_lab2/components/routes/MainTabsWrapper.dart';
+import 'package:flutter_lab2/components/routes/PostPage.dart';
+import 'package:flutter_lab2/components/routes/PostsStubPage.dart';
+import 'package:flutter_lab2/components/routes/RegistrationPage.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppComponent extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final appStyleMode = Provider.of<AppStyleModeNotifier>(context);
+    _updateColorTheme(appStyleMode);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        // backgroundColor: appStyleMode.background,
         primarySwatch: Colors.deepPurple,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PageTabWrapper(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MainTabsWrapper(),
+        '/new-post': (context) => CreatePostPage(),
+        '/post': (context) => PostPage(),
+        '/login': (context) => LoginPage(),
+        '/registration': (context) => RegistrationPage(),
+        '/animations': (context) => AnimatedRoute(),
+        '/posts-placeholder': (context) => PostsStubPage(),
+      },
     );
+  }
+
+  Future<bool> _getColorThemeFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool darkMode = prefs.getBool('darkMode');
+    return darkMode;
+  }
+
+  void _updateColorTheme(AppStyleModeNotifier appStyleMode) {
+    _getColorThemeFromPrefs().then((darkMode) {
+      appStyleMode.switchMode(darkMode);
+    });
   }
 }

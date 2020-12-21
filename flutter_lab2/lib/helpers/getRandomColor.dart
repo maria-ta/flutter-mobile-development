@@ -7,20 +7,20 @@ Color getRandomColor() {
   int index = 1 + new Random().nextInt(5 - 1);
   switch (index) {
     case 1: {
-      return brandColors.champagne;
+      return BrandColors.champagne;
     }
     case 2: {
-      return brandColors.apricot;
+      return BrandColors.apricot;
     }
     case 3: {
-      return brandColors.fuzzy;
+      return BrandColors.fuzzy;
     }
     case 4: {
-      return brandColors.mulberry;
+      return BrandColors.mulberry;
     }
     case 5: {
-      return brandColors.purpureus;
+      return BrandColors.purpureus;
     }
-    return brandColors.background;
+    return BrandColors.background;
   }
 }

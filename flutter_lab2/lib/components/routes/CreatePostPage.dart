@@ -11,5 +11,4 @@ class CreatePostPage extends StatelessWidget {
       body: CreatePost(),
     );
   }
-
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lab2/colors/AppStyleModeNotifier.dart';
 import 'package:flutter_lab2/constants/Colors.dart';
+import 'package:provider/provider.dart';
 
 class CircleAvatarFramed extends StatelessWidget {
   String previewSrc;
@@ -8,8 +10,6 @@ class CircleAvatarFramed extends StatelessWidget {
 
   double size = 32;
   double delta = 2;
-
-  Color frameColor = brandColors.fuzzy;
 
   CircleAvatarFramed(this.previewSrc, this.isFramed);
 
@@ -21,17 +21,18 @@ class CircleAvatarFramed extends StatelessWidget {
   });
 
 
-  CircleAvatar getFramedAvatar() {
+  CircleAvatar getFramedAvatar(BuildContext context) {
+    final appStyleMode = Provider.of<AppStyleModeNotifier>(context);
     return CircleAvatar(
       radius: size,
-      backgroundColor: frameColor,
+      backgroundColor: appStyleMode.fuzzy,
       child: CircleAvatar(
         radius: size - delta,
-        backgroundColor: brandColors.background,
+        backgroundColor: appStyleMode.background,
         child: CircleAvatar(
           radius: size - delta * 2,
           backgroundImage: NetworkImage(previewSrc),
-          backgroundColor: brandColors.mulberry,
+          backgroundColor: appStyleMode.mulberry,
         ),
       ),
     );
@@ -47,6 +48,6 @@ class CircleAvatarFramed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // CircleAvatar widget = isFramed ? this.getFramedAvatar() : this.getAvatar();
-    return isFramed ? this.getFramedAvatar() : this.getAvatar();
+    return isFramed ? this.getFramedAvatar(context) : this.getAvatar();
   }
 }

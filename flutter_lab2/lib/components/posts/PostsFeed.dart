@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lab2/components/posts/Post.dart';
 import 'package:flutter_lab2/models/PostModel.dart';
+import 'package:flutter_lab2/models/mocks/Post.mock.dart';
 
 class PostsFeed extends StatelessWidget {
   List<PostModel> posts;
